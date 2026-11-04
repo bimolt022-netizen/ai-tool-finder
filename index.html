@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Tool Finder — Discover AI Tools</title>
+<meta name="description" content="Discover useful AI tools for chat, writing, design, video, audio, research, coding and productivity.">
+<meta name="robots" content="index,follow">
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#111827;--line:#263247;--muted:#a8b3c7;--text:#f5f7fb;--accent:#8b7cff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#1c2350 0,transparent 34%),var(--bg);color:var(--text);font:16px/1.55 system-ui,Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 18px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:800;font-size:22px}.tag{color:#c7c0ff;border:1px solid #51489a;padding:5px 10px;border-radius:30px;font-size:12px}
+.hero{padding:58px 0 32px;text-align:center}.hero h1{font-size:clamp(32px,6vw,54px);line-height:1.1;margin:0 0 15px}.hero p,.muted{color:var(--muted)}.search{display:flex;max-width:650px;margin:25px auto 0;gap:10px}.search input{flex:1;min-width:0;background:#101827;border:1px solid var(--line);border-radius:12px;padding:15px;color:white;font-size:16px}
+h2{font-size:21px;margin:28px 0 4px}.categories{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.categories button,.filter{background:#111827;border:1px solid var(--line);color:#dce4f2;padding:9px 13px;border-radius:30px;cursor:pointer}.categories button.active{background:#39306f;border-color:#8b7cff}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.card{background:linear-gradient(145deg,#151e30,#101725);border:1px solid var(--line);border-radius:16px;padding:18px;min-height:190px;display:flex;flex-direction:column}.cardtop{display:flex;justify-content:space-between;align-items:center}.symbol{width:40px;height:40px;border-radius:12px;background:#29264d;display:grid;place-items:center;font-weight:800;color:#c9c1ff}.card h3{margin:13px 0 2px}.card p{color:var(--muted);font-size:14px;margin:7px 0 15px}.pill{font-size:12px;color:#c7c0ff}.card a{color:#c5bdff;text-decoration:none;font-weight:650;margin-top:auto}.empty{padding:30px;text-align:center;color:var(--muted);display:none}.foot{border-top:1px solid var(--line);margin-top:45px;padding:22px 0;color:var(--muted);font-size:13px}
+@media(max-width:560px){.wrap{padding:18px 14px}.hero{padding:42px 0 24px}.search{flex-direction:column}.search input{width:100%}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="top"><div class="brand">✦ AI Tool Finder</div><span class="tag">DISCOVER • CREATE • GROW</span></header>
+<section class="hero"><h1>Find the right AI tool<br>for your next big idea.</h1><p>Explore useful AI tools for work, creativity, learning and business.</p><div class="search"><input id="q" type="search" placeholder="Search AI tools..." aria-label="Search AI tools"></div></section>
+<section><h2>Explore categories</h2><p class="muted">Choose a category to filter tools</p><div class="categories" id="cats"></div></section>
+<section><div class="meta"><div><h2 style="margin:0">Tools worth exploring</h2><span class="muted" id="count">16 tools</span></div><button class="filter" id="clear">Clear filters</button></div><div class="grid" id="grid"></div><div class="empty" id="empty">No matching tools. Try another search.</div></section>
+<footer class="foot">AI Tool Finder • Independent directory. Tool names and links belong to their respective owners. Always check each provider’s current features, pricing and terms. <br><br><a href="privacy.html" style="color:#c5bdff">Privacy</a> · <a href="disclaimer.html" style="color:#c5bdff">Disclaimer</a></footer>
+</main>
+<script>
+const tools=[
+["ChatGPT","Chat & Assistants","An AI assistant for writing, brainstorming, learning, coding and everyday tasks.","Freemium","https://chatgpt.com/","✳"],
+["Google Gemini","Chat & Assistants","Google’s AI assistant for writing, research, planning and multimodal tasks.","Freemium","https://gemini.google.com/","✦"],
+["Claude","Chat & Assistants","AI assistant for writing, analysis, coding and working with long documents.","Freemium","https://claude.ai/","C"],
+["Microsoft Copilot","Chat & Assistants","AI assistant for answers, ideas and productivity across Microsoft services.","Freemium","https://copilot.microsoft.com/","M"],
+["Jasper","Writing & Content","AI-assisted marketing content and brand-focused writing.","Paid","https://www.jasper.ai/","J"],
+["Copy.ai","Writing & Content","AI workflows and content tools for marketing and sales teams.","Freemium","https://www.copy.ai/","C"],
+["Grammarly","Writing & Content","Writing suggestions for clarity, tone, grammar and spelling.","Freemium","https://www.grammarly.com/","G"],
+["Canva","Design & Images","Design platform with templates and AI-powered creative features.","Freemium","https://www.canva.com/","C"],
+["Adobe Firefly","Design & Images","Generative AI tools for creating and editing visual content.","Freemium","https://firefly.adobe.com/","A"],
+["Leonardo AI","Design & Images","AI image generation and creative asset tools.","Freemium","https://leonardo.ai/","L"],
+["Runway","Video","AI tools for video generation and creative video editing.","Freemium","https://runwayml.com/","R"],
+["Pika","Video","AI video creation tools for turning ideas into clips.","Freemium","https://pika.art/","P"],
+["ElevenLabs","Audio & Voice","AI voice generation, text-to-speech and audio tools.","Freemium","https://elevenlabs.io/","E"],
+["Suno","Audio & Voice","AI music creation from text prompts and ideas.","Freemium","https://suno.com/","S"],
+["Perplexity","Research","AI-powered answer and research engine with cited sources.","Freemium","https://www.perplexity.ai/","P"],
+["GitHub Copilot","Coding","AI coding assistant for supported development environments.","Paid","https://github.com/features/copilot","⌘"]
+];
+const categories=["All tools","Chat & Assistants","Writing & Content","Design & Images","Video","Audio & Voice","Research","Coding","Productivity","Automation"];
+let active="All tools";
+const cats=document.getElementById("cats"),grid=document.getElementById("grid"),q=document.getElementById("q");
+function renderCats(){cats.innerHTML="";categories.forEach(c=>{let b=document.createElement("button");b.textContent=c;b.className=active===c?"active":"";b.onclick=()=>{active=c;renderCats();render()};cats.appendChild(b)})}
+function render(){let term=q.value.toLowerCase();let list=tools.filter(t=>(active==="All tools"||t[1]===active)&&t.slice(0,4).join(" ").toLowerCase().includes(term));grid.innerHTML="";list.forEach(t=>{let a=document.createElement("a");a.href=t[4];a.target="_blank";a.rel="noopener noreferrer";a.textContent="Visit official website ↗";let d=document.createElement("article");d.className="card";let top=document.createElement("div");top.className="cardtop";let s=document.createElement("div");s.className="symbol";s.textContent=t[5];let p=document.createElement("span");p.className="pill";p.textContent=t[1];top.append(s,p);let h=document.createElement("h3");h.textContent=t[0];let desc=document.createElement("p");desc.textContent=t[2];let price=document.createElement("span");price.className="pill";price.textContent=t[3];d.append(top,h,desc,price,a);grid.append(d)});document.getElementById("count").textContent=list.length+" tools";document.getElementById("empty").style.display=list.length?"none":"block"}
+q.addEventListener("input",render);document.getElementById("clear").onclick=()=>{q.value="";active="All tools";renderCats();render()};renderCats();render();
+</script></body></html>
